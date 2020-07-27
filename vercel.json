@@ -1,6 +1,6 @@
 {
   "name": "dog-treats-api",
-  "version": 1,
+  "version": 2,
   "env": {
     "GMAIL_ADDRESS": "@gmail-address",
     "GMAIL_PASSWORD": "@gmail-password"
