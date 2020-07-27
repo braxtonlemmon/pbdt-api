@@ -7,18 +7,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const mailer = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  auth: {
-    user: process.env.GMAIL_ADDRESS,
-    pass: process.env.GMAIL_PASSWORD,
-  },
-});
 
 module.exports = (req, res) => {
-    mailer.sendMail(
+  const mailer = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+      user: process.env.GMAIL_ADDRESS,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  });
+  
+  mailer.sendMail(
       {
         from: req.body.from,
         to: process.env.GMAIL_ADDRESS,
