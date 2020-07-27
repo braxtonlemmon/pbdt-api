@@ -20,16 +20,23 @@ module.exports = (req, res) => {
   });
 
   mailer.sendMail(
-      {
-        from: req.body.from || 'No one',
-        to: process.env.GMAIL_ADDRESS,
-        subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
-        text: `Message from ${req.body.from || 'Anonymous'} (${req.body.email}): ${req.body.message || "No message"}`,
-      },
-      function (err, info) {
-        if (err) return res.status(500).send(err);
-        res.json({ success: true });
-      }
-    );
+    {
+      from: req.body.from || "No one",
+      to: process.env.GMAIL_ADDRESS,
+      subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
+      text: `Message from ${req.body.from || "Anonymous"} (${
+        req.body.email
+      }): ${req.body.message || "No message"}`,
+      html: `
+          <p>Message from ${req.body.from || "Anonymous"} (${req.body.email}):</p>
+          <p></p>
+          <p>${req.body.message || "No message"}</p>
+        `,
+    },
+    function (err, info) {
+      if (err) return res.status(500).send(err);
+      res.json({ success: true });
+    }
+  );
 
 }
