@@ -1,6 +1,11 @@
+const express = require('express');
 const nodemailer = require('nodemailer');
 require("path");
 require("dotenv").config();
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const mailer = nodemailer.createTransport({
   service: "gmail",
