@@ -44,12 +44,14 @@ const handler = (req, res) => {
         <p>New message from ${req.body.from || "Anonymous"} (${
         req.body.email
       }):</p>
+        <p>Phone: ${req.body.phone || 'No phone number'}</p>
         <br>
+        <h2>Message</h2>
         <p>${req.body.message || "No message"}</p>
       `,
       text: `New message from ${req.body.from || "Anonymous"} (${
         req.body.email
-      }): ${req.body.message || "No message"}`,
+      }). Phone: ${req.body.phone || 'No phone number'}: ${req.body.message || "No message"}`,
     },
     function (err, info) {
       if (err) return res.status(500).send(err);
