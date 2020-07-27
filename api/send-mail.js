@@ -18,13 +18,13 @@ module.exports = (req, res) => {
       pass: process.env.GMAIL_PASSWORD,
     },
   });
-  
+
   mailer.sendMail(
       {
-        from: req.body.from,
+        from: req.body.from || 'No one',
         to: process.env.GMAIL_ADDRESS,
-        subject: req.body.subject || "No subject",
-        text: req.body.message || "No message",
+        subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
+        text: `Message from ${req.body.from || 'Anonymous'} (${req.body.email}): ${req.body.message || "No message"}`,
       },
       function (err, info) {
         if (err) return res.status(500).send(err);
