@@ -24,11 +24,8 @@ module.exports = (req, res) => {
       from: req.body.from || "No one",
       to: process.env.GMAIL_ADDRESS,
       subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
-      // text: `Message from ${req.body.from || "Anonymous"} (${
-      //   req.body.email
-      // }): ${req.body.message || "No message"}`,
       html: `
-          <p>Message from ${req.body.from || "Anonymous"} (${req.body.email}):</p>
+          <p>New message from ${req.body.from.toUpperCase() || "Anonymous"} (${req.body.email}):</p>
           <br><br>
           <p>${req.body.message || "No message"}</p>
         `,
