@@ -25,10 +25,13 @@ module.exports = (req, res) => {
       to: process.env.GMAIL_ADDRESS,
       subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
       html: `
-          <p>New message from ${req.body.from.toUpperCase() || "Anonymous"} (${req.body.email}):</p>
-          <br><br>
-          <p>${req.body.message || "No message"}</p>
-        `,
+        <p>New message from ${req.body.from || "Anonymous"} (${req.body.email}):</p>
+        <br>
+        <p>${req.body.message || "No message"}</p>
+      `,
+      text: `New message from ${req.body.from || "Anonymous"} (${
+        req.body.email
+      }): ${req.body.message || "No message"}`,
     },
     function (err, info) {
       if (err) return res.status(500).send(err);
