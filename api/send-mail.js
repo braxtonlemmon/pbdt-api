@@ -10,7 +10,8 @@ app.use(express.urlencoded({ extended: false }));
 
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Request-Method', 'POST');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader(
     'Access-Control-Allow-Headers',
