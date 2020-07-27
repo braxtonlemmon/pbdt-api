@@ -10,15 +10,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
-
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
+const allowCors = fn => async (req, res) => {
+  // res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
   res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return await fn(req, res);
+}
 
+const handler = (req, res) => {
   const mailer = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -35,7 +42,9 @@ module.exports = (req, res) => {
       to: process.env.GMAIL_ADDRESS,
       subject: `PB DOG TREATS: ${req.body.subject || "No subject"}`,
       html: `
-        <p>New message from ${req.body.from || "Anonymous"} (${req.body.email}):</p>
+        <p>New message from ${req.body.from || "Anonymous"} (${
+        req.body.email
+      }):</p>
         <br>
         <p>${req.body.message || "No message"}</p>
       `,
@@ -48,5 +57,6 @@ module.exports = (req, res) => {
       res.json({ success: true });
     }
   );
-
 }
+
+module.exports = allowCors(handler);
