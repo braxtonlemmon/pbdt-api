@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 
 module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
 
   res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader(
